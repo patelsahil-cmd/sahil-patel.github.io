@@ -1,39 +1,37 @@
-let board;
-let squareSize = 50;
-let cols, rows;
+let NUM_ROWS = 4;
+let NUM_COLS = 5;
+let rectWidth, rectHeight;
+let currentRow, currentCol;
+let gridData = [[0, 0, 0, 0, 0],
+                 [0, 0, 0, 0, 0],
+                 [0, 255, 0, 0, 0],
+                 [255, 255, 255, 0, 0]];
+let isSquarePattern = false; // Control the pattern type
 
 function setup() {
-    createCanvas(400, 400);
-    cols = width / squareSize;
-    rows = height / squareSize;
-    board = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
-    randomizeBoard();
+  createCanvas(windowWidth, windowHeight);
+  rectWidth = width / NUM_COLS;
+  rectHeight = height / NUM_ROWS;
+  randomizeGrid(); // Randomize the starting grid
 }
 
 function draw() {
-    background(220);
-    renderBoard();
-    
-    // Draw overlay for affected squares on mouse press
-    if (mouseIsPressed) {
-        let x = Math.floor(mouseX / squareSize);
-        let y = Math.floor(mouseY / squareSize);
-        if (x >= 0 && x < cols && y >= 0 && y < rows) {
-            fill(0, 100); // Semi-transparent color
-            rect(x * squareSize, y * squareSize, squareSize, squareSize);
-        }
-    }
-    
-    checkWinCondition();
+  background(220);
+  determineActiveSquare();
+  drawGrid();
+  checkWinCondition(); // Check for win condition every frame
 }
 
-function renderBoard() {
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            fill(board[i][j]);
-            rect(j * squareSize, i * squareSize, squareSize, squareSize);
-        }
-    }
+function mousePressed() {
+  if (keyIsDown(SHIFT)) {
+    flip(currentCol, currentRow); // Only flip the square under the cursor
+  } else {
+    flip(currentCol, currentRow);
+    flip(currentCol - 1, currentRow);
+    flip(currentCol + 1, currentRow);
+    flip(currentCol, currentRow - 1);
+    flip(currentCol, currentRow + 1);
+  }
 }
 
 function mouseClicked() {
