@@ -33,5 +33,43 @@ function mousePressed() {
     flip(currentCol, currentRow + 1);
   }
 }
+function flip(col, row) {
+  if (col >= 0 && col < NUM_COLS) {
+    if (row >= 0 && row < NUM_ROWS) {
+      gridData[row][col] = (gridData[row][col] === 0) ? 255 : 0;
+    }
+  }
+}
+
+
+function determineActiveSquare() {
+  currentRow = int(mouseY / rectHeight);
+  currentCol = int(mouseX / rectWidth);
+}
+
+
+function drawGrid() {
+  for (let x = 0; x < NUM_COLS; x++) {
+    for (let y = 0; y < NUM_ROWS; y++) {
+      fill(gridData[y][x]);
+      rect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+     
+      // Draw overlay for impacted squares if mouse is pressed
+      if (mouseIsPressed && !keyIsDown(SHIFT)) {
+        if (isSquarePattern) {
+          fill(150, 150, 255, 100); // Overlay color for square pattern
+          rect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+        } else if (x === currentCol && y === currentRow) {
+          fill(150, 150, 255, 100); // Overlay for center square
+          rect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+        } else if ((x === currentCol && (y === currentRow - 1 || y === currentRow + 1)) ||
+                   (y === currentRow && (x === currentCol - 1 || x === currentCol + 1))) {
+          fill(150, 150, 255, 100); // Overlay for cross pattern
+          rect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+        }
+      }
+    }
+  }
+}
 
 }
