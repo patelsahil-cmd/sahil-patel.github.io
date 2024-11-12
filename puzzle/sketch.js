@@ -8,6 +8,7 @@ let gridData = [[0, 0, 0, 0, 0],
                  [255, 255, 255, 0, 0]];
 let isSquarePattern = false; // Control the pattern type
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectWidth = width / NUM_COLS;
@@ -15,12 +16,14 @@ function setup() {
   randomizeGrid(); // Randomize the starting grid
 }
 
+
 function draw() {
   background(220);
   determineActiveSquare();
   drawGrid();
   checkWinCondition(); // Check for win condition every frame
 }
+
 
 function mousePressed() {
   if (keyIsDown(SHIFT)) {
@@ -33,6 +36,8 @@ function mousePressed() {
     flip(currentCol, currentRow + 1);
   }
 }
+
+
 function flip(col, row) {
   if (col >= 0 && col < NUM_COLS) {
     if (row >= 0 && row < NUM_ROWS) {
@@ -72,4 +77,46 @@ function drawGrid() {
   }
 }
 
+
+function checkWinCondition() {
+  let firstValue = gridData[0][0];
+  let win = true;
+
+
+  for (let row of gridData) {
+    for (let value of row) {
+      if (value !== firstValue) {
+        win = false;
+        break;
+      }
+    }
+    if (!win) break;
+  }
+
+
+  if (win) {
+    fill(0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("You Win!", width / 2, height / 2);
+  }
 }
+
+
+function randomizeGrid() {
+  for (let row = 0; row < NUM_ROWS; row++) {
+    for (let col = 0; col < NUM_COLS; col++) {
+      gridData[row][col] = random() < 0.5 ? 0 : 255; // Randomize to 0 or 255
+    }
+  }
+}
+
+
+function keyPressed() {
+  if (key === ' ') {
+    isSquarePattern = !isSquarePattern; // Toggle between cross and square pattern
+  }
+}
+
+
+
