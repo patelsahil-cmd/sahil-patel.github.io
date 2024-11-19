@@ -48,3 +48,31 @@ function drawTree(x1, y1, angle, depth, angleOffset) {
     let x2 = x1 + (cos(angle) * depth * scale);  // Calculate the endpoint of the branch
     let y2 = y1 + (sin(angle) * depth * scale);  // Shorter based on depth
 
+    // Draw the branch
+    strokeWeight(map(depth, 0, 6, 10, 1));  // Thicker at the base, thinner at the top
+    stroke(0);  // Black color for branches
+    drawLine(x1, y1, x2, y2);
+
+    // Draw leaves at the end of the branch (if the depth is small enough)
+    if (depth < leafDepth) {
+      drawLeaf(x2, y2, depth);
+    }
+
+    // Recursively draw three branches (left, middle, right) at dynamic angles
+    let newDepth = depth - 1;
+
+    // Recursively draw three branches, splitting by the angleOffset
+    drawTree(x2, y2, angle - angleOffset, newDepth, angleOffset);  // Left branch
+    drawTree(x2, y2, angle, newDepth, angleOffset);  // Middle branch
+    drawTree(x2, y2, angle + angleOffset, newDepth, angleOffset);  // Right branch
+  }
+}
+
+// Function to handle key press events (to control leaf depth)
+function keyPressed() {
+  if (key == 'z' || key == 'Z') {
+    leafDepth = max(0, leafDepth - 1);  // Decrease the leaf depth, but not below 0
+  } else if (key == 'x' || key == 'X') {
+    leafDepth = min(5, leafDepth + 1);  // Increase the leaf depth, but not above 5
+  }
+}

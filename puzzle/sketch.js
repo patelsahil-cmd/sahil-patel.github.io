@@ -1,3 +1,5 @@
+// Sahil patel
+// The puzzle project
 let NUM_ROWS = 4;
 let NUM_COLS = 5;
 let rectWidth, rectHeight;
