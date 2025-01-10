@@ -11,19 +11,17 @@ let explosionImages = [];
 let shotsRemainingImages = [];
 let targetHitImage = [];
 
+let currentGame;
 
-function preload(){
-backImage = loadImage("assets/background.png");
-backImageReport = loadImage("assets/backgroundReport.png");
-barrelImage = loadImage("assets/barrel.png");
-baseImage = loadImage("assets/base")
-}
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1068, 600);
+  currentGame = new Game();
+
 }
 
 function draw() {
-  background(220);
+  currentGame.play();
 }
+ 
