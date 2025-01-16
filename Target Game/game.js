@@ -1,26 +1,52 @@
 class Game {
 
     constructor() {
-        this.cannonPower = 60;
+        this.cannonAngle = 60;
         this.cannonPower = 10;
         this.shots = [];
     }
     play() {
         imageMode(CORNER);
         image(backImage, 0, 0);
-        // process and draw every cannonball
 
+        imageMode(CENTER);
+        // process and draw every cannonball
+        for (let i = 0; i < this.shots.length; i++) {
+            let b = this.shots[i];
+            b.move();
+            b.display();
+            b.checkGroundCollision();
+            // check the target collision 
+            if(b.getAlive()=== false){
+            if(b.getCollisionType()===1);
+            // ground collision case 
+            this.shots.splice(i, 1);
+            
+            }
+
+
+            // check the target collision 
+        if(b.getAlive()===false){
+            if(b.getCollisionType()===1){
+                // ground collision case
+
+                this.shots.splice(i, 1);
+                i--;
+            }
+        }
+        
+        }
         // process and drar every smoke particle 
 
-        
+
         // draw the cannon
         this.displayCannon();
         this.displaypower();
     }
 
-    createShot(){
+    createShot() {
         let v = createVector(this.cannonPower * cos(radians(this.cannonAngle)),
-        this.cannonPower * sin(radians(this.cannonAngle)*-1));
+            this.cannonPower * sin(radians(this.cannonAngle) * -1));
         this.shots.push(new Ball(v));
     }
 
@@ -30,7 +56,7 @@ class Game {
         push();
         translate(73, 525);
         push();
-        rotate(radians(360 - this.connonAngle));
+        rotate(radians(360 - this.cannonAngle));
         image(barrelImage, 0, 0);
         pop();
         image(baseImage, 0, 0);
@@ -39,10 +65,10 @@ class Game {
 
     }
 
-    displaypower(){
+    displaypower() {
         rectMode(CORNER);
         fill(0);
-        rect(0,50,this.cannonPower * 15 - 50, 45);
+        rect(0, 50, this.cannonPower * 15 - 50, 45);
     }
 
 
@@ -50,7 +76,7 @@ class Game {
         if (increase) {
             if (this.cannonPower < 20) {
                 this.cannonPower += 0.15;
-            print(1)
+                
             }
         }
 
@@ -65,12 +91,12 @@ class Game {
     changeAngle(increase) {
         // if increase is true - getting larger angle 
         if (increase) {
-            if (this.connonAngle < 90) this.connonAngle += 2;
+            if (this.cannonAngle < 90) this.cannonAngle += 2;
 
         }
 
         else {
-            if (this.connonAngle > 0) this.connonAngle -= 2;
+            if (this.cannonAngle > 0) this.cannonAngle -= 2;
 
         }
 

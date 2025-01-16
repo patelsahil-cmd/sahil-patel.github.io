@@ -4,6 +4,8 @@ constructor(v_){
     this.pos = createVector(73,525);
     this.velocity = v_;
     this.gravity = createVector(0,0.2);
+    this.alive = true
+    this.collisionType = 0
 }
 
 move(){
@@ -19,5 +21,20 @@ display(){
     pop();
 }
 
+getAlive(){
+    return this.alive;
+}
+
+getCollisionType(){
+    return this.collisionType;
+}
+checkGroundCollision(){
+    // 546
+    if(this.pos.y > 546){
+        this.alive = false;
+        this.collisionType = 1;
+    }
+
+}
 
 }

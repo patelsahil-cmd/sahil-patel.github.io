@@ -26,31 +26,31 @@ function draw() {
   quickInput();
 }
 
-function keyPressed(){
-  if (key === " "){
+function keyPressed() {
+  if (key === " ") {
     currentGame.createShot();
-    
-  }
-}
-
-
-function quickInput(){
-  if(keyIsDown(LEFT_ARROW)){
-  currentGame.changeAngle(true);
 
   }
-
-if(keyIsDown(RIGHT_ARROW)){
-  currentGame.changeAngle(false);
-}
-if(keyIsDown(UP_ARROW)){
-  currentGame.changePower(true);
-  
 }
 
-if(keyIsDown(DOWN_ARROW)){
-  currentGame.changePower(false);
-}
+
+function quickInput() {
+  if (keyIsDown(LEFT_ARROW)) {
+    currentGame.changeAngle(true);
+
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    currentGame.changeAngle(false);
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    currentGame.changePower(true);
+
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    currentGame.changePower(false);
+  }
 
 }
- 
