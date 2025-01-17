@@ -4,6 +4,8 @@ class Game {
         this.cannonAngle = 60;
         this.cannonPower = 10;
         this.shots = [];
+        this.targetx = 600;
+        this.targety = 300;
     }
     play() {
         imageMode(CORNER);
@@ -17,24 +19,23 @@ class Game {
             b.display();
             b.checkGroundCollision();
             // check the target collision 
-            if(b.getAlive()=== false){
-            if(b.getCollisionType()===1);
-            // ground collision case 
-            this.shots.splice(i, 1);
-            
+            if (b.getAlive() === false) {
+                if (b.getCollisionType() === 1);
+                // ground collision case 
             }
 
 
             // check the target collision 
-        if(b.getAlive()===false){
-            if(b.getCollisionType()===1){
-                // ground collision case
+            b.checkTargetCollision();
+            if (b.getAlive() === false) {
+                if (b.getCollisionType() === 1) {
+                    // ground collision case
 
-                this.shots.splice(i, 1);
-                i--;
+                    this.shots.splice(i, 1);
+                    i--;
+                }
             }
-        }
-        
+
         }
         // process and drar every smoke particle 
 
@@ -42,6 +43,7 @@ class Game {
         // draw the cannon
         this.displayCannon();
         this.displaypower();
+        this.displaytarget();
     }
 
     createShot() {
@@ -70,13 +72,16 @@ class Game {
         fill(0);
         rect(0, 50, this.cannonPower * 15 - 50, 45);
     }
-
+    
+    displaytarget(){
+        image(targetImage, this.targetx, this.targety);
+    }
 
     changePower(increase) {
         if (increase) {
             if (this.cannonPower < 20) {
                 this.cannonPower += 0.15;
-                
+
             }
         }
 
